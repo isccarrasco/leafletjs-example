@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
 
 	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+	<script src="https://cdn.rawgit.com/jieter/Leaflet.encoded/master/Polyline.encoded.js"></script>
 
 	<style type="text/css" media="screen">
 
@@ -41,7 +42,7 @@
 
 	<script type="text/javascript">
 
-		var mymap = L.map('mapid').setView([16.438277, -95.021342], 13);
+		var mymap = L.map('mapid').setView([20.9707574, -89.6154533], 13);
 
 		var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
@@ -63,10 +64,36 @@
 			"OpenStreetMap": osm
 		};
 
+		var pointA = new L.LatLng(20.9707574, -89.6154533);
+		var pointB = new L.LatLng(20.9704667, -89.6155061);
+		var pointC = new L.LatLng(20.9700425, -89.6155997);
+		var pointD = new L.LatLng(20.9695756, -89.6157719);
+
+		var pointList = [pointA, pointB, pointC, pointD];
+
+		var firstpolyline = new L.Polyline(pointList, {
+		    color: 'red',
+		    weight: 3,
+		    opacity: 0.5,
+		    smoothFactor: 1
+		});
+		firstpolyline.addTo(mymap);
+
+		var encoded = "slc_Cn|zaPu@p@]jA`AdBd@v@d@x@f@v@j@z@h@z@h@z@l@~@d@r@`@r@d@r@h@z@d@r@b@r@h@z@j@`An@`Ap@`Ap@bAp@bAj@x@f@v@`@v@\t@r@tAd@z@d@`A^r@`@z@b@|@d@~@f@`Ab@z@^t@f@~@j@n@dAb@bBV|@J`ALfARhATbARfARjARdAPv@LjAP~@JjAPpATvAVzAX|AV~AV|AVxAVvATxATtATrATrAPnAPdAP`APz@Nv@P|@Jv@J|@ThALtAVzA\t@Nz@P`APdALhAJdAL`AJx@JtAPzA`@pAThAFx@Lt@Hz@P~@LtATdALv@Hv@JpATpALhATr@V~AX~@NfAEv@Rz@Zx@Pz@JhAHnALlANbAF`AHfAZx@T~@PjANdBTv@JfANhALdANbAL|@Lz@Jz@L|@Lx@Pz@Pv@Pv@LzAT~@PrANx@H~@JbALdALdAN`AJ";
+
+		var polyline = new L.Polyline.fromEncoded(encoded);
+		console.log(polyline.getLatLngs());
+		polyline.addTo(mymap);
+
+
+		// var polyline = new L.polyline(L.PolylineUtil.decode(encoded, 6));
+		// polyline.addTo(mymap);
+
 		var layerControl = L.control.layers(baseLayers).addTo(mymap);
 
+
 		function flyto() {
-			var latlng = L.latLng(16.438277, -95.021342);
+			var latlng = L.latLng(20.9707574, -89.6154533);
 
 			mymap.flyTo(latlng, 15);
 		}
@@ -94,6 +121,12 @@
 			layerControl.addOverlay(wmsLayer,"WMS");
 
 		}
+
+
+
+
+
+
 
 	</script>
 
